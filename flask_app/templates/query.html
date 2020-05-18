@@ -7,13 +7,17 @@
 <div class="container-fluid">
     {% for result in results %}
     <div class="media">
-        <img src="{{ result.poster_url }}" class="mr-3" alt="missing">
+        {% if result.cover %}
+        <img src="{{ result.cover }}" class="mr-3" alt="missing"/>
+        {% else %}
+        <img style="width: 80px; height: 80px" class="mr-3" alt="No cover"/>
+        {% endif %}
         <div class="media-body">
         <h5 class="mt-0">
-            <a href="{{ url_for('games.game_detail', game_id=result.imdb_id) }}">
-                {{ result.title }}
+            <a href="{{ url_for('games.game_detail', game_id=result.id) }}">
+                {{ result.name }}
             </a> 
-            ({{ result.year }})
+            ({{ result.release_date }})
         </h5>
         </div>
     </div>

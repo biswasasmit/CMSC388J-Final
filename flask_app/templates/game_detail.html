@@ -12,15 +12,15 @@
   <div class="col">
     <div class="card text-center">
       <div class="card-header">
-        {{ game.title }} ({{ game.year }})
+        {{ game.name }} ({{ game.release_date }})
       </div>
       <div class="card-body">
-        <img src="{{ game.poster_url }}" class="mr-3" alt="alt text">
+        <img src="{{ game.cover }}" class="mr-3" alt="alt text">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><b>Directed by:</b> {{ game.director }}</li>
-          <li class="list-group-item"><b>Actors:</b> {{ game.actors }}</li>
-          <li class="list-group-item"><b>Genres:</b> {{ game.genres }}</li>
-          <li class="list-group-item"><b>Awards:</b> {{ game.awards }}</li>
+          <li class="list-group-item"><b>Rating:</b> {{ game.critic_rating }}</li>
+          <li class="list-group-item"><b>Genres:</b> {{ game.genres }} </li>
+          <li class="list-group-item"><b>Platforms:</b> {{ game.platforms }} </li>
+          <li class="list-group-item"><b>Time to beat:</b> {{ game.time_to_beat }} </li>
         </ul>
       </div>
     </div>

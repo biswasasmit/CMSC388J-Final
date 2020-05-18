@@ -13,11 +13,9 @@ from datetime import datetime
 from .client import GameClient
 
 app = Flask(__name__)
-# app.config["MONGO_URI"] = "mongodb://localhost:27017/second_database"
 app.config['MONGODB_HOST'] = 'mongodb://localhost:27017/goodplays'
 app.config['SECRET_KEY'] = b'\x020;yr\x91\x11\xbe"\x9d\xc1\x14\x91\xadf\xec'
 
-# mongo = PyMongo(app)
 db = MongoEngine(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'users.login'
