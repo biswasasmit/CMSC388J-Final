@@ -4,7 +4,7 @@
     {# Display any error messages #}
     {% if err_msg %}
         <div class="col alert alert-warning">
-            <p>{{ err_msg }} Return <a href={{ url_for('index') }}>home</a>.</p>
+            <p>{{ err_msg }} Return <a href={{ url_for('main.index') }}>home</a>.</p>
         </div>
     {% endif %}
 </div>
@@ -14,7 +14,7 @@
         {# Indicate which user's reviews we're looking at #}
         <h1>{{ user.username }}'s reviews</h1>
         {% if user.profile_pic %}
-            <img class="mr-3 propic user-detail" src="{{ url_for('images', username=user.username) }}" />
+            <img class="mr-3 propic user-detail" src="{{ url_for(users.images', username=user.username) }}" />
         {% endif %}
     </div>
 </div>
@@ -25,7 +25,7 @@
 {% for review in reviews %}
     <div class="row">
         <div class="col">
-            <a href="{{ url_for('movie_detail', movie_id=review.imdb_id) }}">{{ review.movie_title }}</a>
+            <a href="{{ url_for('games.game_detail', game_id=review.imdb_id) }}">{{ review.game_title }}</a>
         </div>
         <div class="col">
             {{ review.content }}

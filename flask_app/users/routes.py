@@ -1,3 +1,5 @@
+## User management routes
+
 # 3rd-party packages
 from flask import render_template, request, redirect, url_for, flash, Response, send_file, Blueprint
 from flask_mongoengine import MongoEngine
@@ -10,7 +12,7 @@ from datetime import datetime
 
 # local
 from .. import app, bcrypt, client
-from ..forms import (SearchForm, MovieReviewForm, RegistrationForm, LoginForm,
+from ..forms import (SearchForm, GameReviewForm, RegistrationForm, LoginForm,
                              UpdateUsernameForm, UpdateProfilePicForm)
 from ..models import User, Review, load_user
 from ..utils import current_time
@@ -22,7 +24,7 @@ users = Blueprint("users", __name__)
 @users.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('login'))
+        return redirect(url_for('users.login'))
 
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -34,7 +36,7 @@ def register():
         )
         user.save()
         flash("Thanks for registering! You can now log in below.")
-        return redirect(url_for('login'))
+        return redirect(url_for('users.login'))
 
     return render_template('register.html', form=form, user_exists=False)
 
@@ -60,7 +62,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))
 
 @users.route('/account', methods=['GET', 'POST'])
 @login_required
@@ -72,7 +74,7 @@ def account():
         user.save()
         
         flash("Username updated. Please login again.")
-        return redirect(url_for('login'))
+        return redirect(url_for('users.login'))
     
     photo_form = UpdateProfilePicForm()
     if 'photo' in request.args and photo_form.validate_on_submit():
@@ -84,3 +86,19 @@ def account():
         return redirect(url_for('account'))
     
     return render_template('account.html', user_form=user_form, photo_form=photo_form)
+
+@users.route('/user/<username>')
+def user_detail(username):
+    user = load_user(username)
+
+    if user is not None:
+        reviews = Review.objects(commenter=user)
+        return render_template('user_detail.html', user=user, reviews=reviews)
+    else:
+        return render_template('user_detail.html', err_msg="That user was not found.")
+
+@users.route('/images/<username>')
+def images(username):
+    user = load_user(username)
+    photo = user.profile_pic
+    return send_file(photo, mimetype=photo.content_type)

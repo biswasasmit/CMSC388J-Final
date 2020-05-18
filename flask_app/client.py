@@ -60,7 +60,7 @@ class GameClient:
 
     def retrieve_game_by_id(self, imdb_id):
         """ 
-        Use to obtain a Game object representing the movie identified by
+        Use to obtain a Game object representing the game identified by
         the supplied igdb_id
         """
         payload = {'fields' : f"*; where id = {imdb_id}" }
@@ -126,6 +126,6 @@ class GameClient:
 if __name__=='__main__':
     import os
 
-    client = GameClient(os.environ.get('OGDB_API_KEY'))
+    client = GameClient(os.environ.get('IGDB_API_KEY'))
 
     games = client.search("assassins")

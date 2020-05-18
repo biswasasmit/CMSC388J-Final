@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block header %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="{{ url_for('index') }}">Movie Reviewer</a>
+    <a class="navbar-brand" href="{{ url_for('main.index') }}">GoodPlays</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -16,22 +16,27 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('logout') }}">
+                <a class="nav-link" href="{{ url_for('users.logout') }}">
                     Logout
                 </a>
             </li>
             {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('login') }}">
+                <a class="nav-link" href="{{ url_for('users.login') }}">
                     Login
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('register') }}">
+                <a class="nav-link" href="{{ url_for('users.register') }}">
                     Register
                 </a>
             </li>
             {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.about') }}">
+                    About
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

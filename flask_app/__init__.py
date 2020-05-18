@@ -20,9 +20,14 @@ app.config['SECRET_KEY'] = b'\x020;yr\x91\x11\xbe"\x9d\xc1\x14\x91\xadf\xec'
 # mongo = PyMongo(app)
 db = MongoEngine(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'users.login'
 bcrypt = Bcrypt(app)
 
 client = GameClient(os.environ.get('OGDB_API_KEY'))
 
-from . import routes
+from flask_app.main.routes import main
+from flask_app.users.routes import users
+from flask_app.games.routes import games
+
+for bp in [main, users, games]:
+    app.register_blueprint(bp)
