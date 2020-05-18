@@ -44,7 +44,7 @@ def register():
 @users.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('account'))
+        return redirect(url_for('users.account'))
     
     form = LoginForm()
     if form.validate_on_submit():
@@ -52,7 +52,7 @@ def login():
 
         if user is not None and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-            return redirect(url_for('account'))
+            return redirect(url_for('users.account'))
         else:
             flash("Please try again.")
     
@@ -83,7 +83,7 @@ def account():
         user = load_user(current_user.username)
         user.profile_pic.replace(photo.read(), content_type=photo.content_type)
         user.save()
-        return redirect(url_for('account'))
+        return redirect(url_for('users.account'))
     
     return render_template('account.html', user_form=user_form, photo_form=photo_form)
 
