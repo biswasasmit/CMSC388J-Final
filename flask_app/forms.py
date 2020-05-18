@@ -14,13 +14,13 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Search')
 
 class MovieReviewForm(FlaskForm):
-    text = TextAreaField('Comment', validators=[InputRequired(), Length(min=1, max=500)])
+    text = TextAreaField('Comment', validators=[InputRequired(), Length(min=5, max=500)])
     submit = SubmitField('Enter Comment')
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=1, max=40)])
     email = StringField('Email', validators=[InputRequired(), Email()])
-    password = PasswordField('Password', validators=[InputRequired()])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=1)])
     confirm_password = PasswordField('Confirm Password', 
                                     validators=[InputRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up')
@@ -37,14 +37,20 @@ class RegistrationForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=1, max=40)])
-    password = PasswordField('Password', validators=[InputRequired()])
-
-    submit = SubmitField('Log In')
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=1)])
+    submit = SubmitField('Login')
 
 class UpdateUsernameForm(FlaskForm):
-    new_username = StringField('Update Username', validators=[InputRequired(), Length(min=1, max=40)])
+    new_username = StringField('Update username:', validators=[InputRequired(), Length(min=1, max=40)])
+    submit = SubmitField('Update')
 
-    submit = SubmitField('Change Username')
+    def validate_new_username(self, new_username):
+        user = User.objects(username=new_username.data).first()
+        if user is not None:
+            raise ValidationError('Username is taken')
 
+allowed_exts = ['jpg', 'png', 'jpeg', 'gif']
 class UpdateProfilePicForm(FlaskForm):
-    pass
+    pic = FileField('Update profile picture:', \
+        validators=[FileRequired(), FileAllowed(allowed_exts, 'Images only')])
+    submit = SubmitField('Update')

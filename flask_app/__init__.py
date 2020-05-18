@@ -23,6 +23,6 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 bcrypt = Bcrypt(app)
 
-client = GameClient()
+client = GameClient(os.environ.get('OGDB_API_KEY'))
 
 from . import routes

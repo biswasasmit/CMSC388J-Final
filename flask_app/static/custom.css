@@ -3,6 +3,14 @@ img {
     padding: 1; 
 }
 
+.propic {
+    border-radius: 100%;
+}
+
+.user-detail {
+    max-width: 150;
+}
+
 .card-body > img {
     max-width: 200;
 }

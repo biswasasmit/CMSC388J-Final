@@ -2,7 +2,7 @@ import requests
 
 from .utils import unix_to_date
 
-class Game(object):
+class Game:
     def __init__(self, igdb_json, detailed = False):
         if detailed:
             self.age_ratings = igdb_json.get('age_rating', None)
@@ -22,10 +22,10 @@ class Game(object):
         return self.name
         
 
-class GameClient(object):
-    def __init__(self):
+class GameClient:
+    def __init__(self, key):
         self.base_url = 'https://api-v3.igdb.com/'
-        self.header = {'user-key' : "483267488d37213abfad350eab120b05", 'Accept' :'application/json'}
+        self.header = {'user-key' : key, 'Accept' :'application/json'}
 
     def search(self, search_string):
         """
@@ -127,6 +127,5 @@ if __name__=='__main__':
     import os
 
     client = GameClient(os.environ.get('OGDB_API_KEY'))
-
 
     games = client.search("assassins")

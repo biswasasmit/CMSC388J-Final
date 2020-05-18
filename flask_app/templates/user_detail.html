@@ -1,29 +1,39 @@
 {% extends "header.html" %}
 {% block content %}
-{% if error %}
+<div class="row">
+    {# Display any error messages #}
+    {% if err_msg %}
+        <div class="col alert alert-warning">
+            <p>{{ err_msg }} Return <a href={{ url_for('index') }}>home</a>.</p>
+        </div>
+    {% endif %}
+</div>
+{% if user %}
+<div class="row">
+    <div class="col">
+        {# Indicate which user's reviews we're looking at #}
+        <h1>{{ user.username }}'s reviews</h1>
+        {% if user.profile_pic %}
+            <img class="mr-3 propic user-detail" src="{{ url_for('images', username=user.username) }}" />
+        {% endif %}
+    </div>
+</div>
+{# Show all reviews made by the user #}
+{% if not reviews %}
+    <div class="row"><div class="col">This user has not posted any reviews yet!</div></div>
+{% endif %}
+{% for review in reviews %}
     <div class="row">
         <div class="col">
-            {{error}}
+            <a href="{{ url_for('movie_detail', movie_id=review.imdb_id) }}">{{ review.movie_title }}</a>
         </div>
-    </div>
-{% else %}
-    <div class="row">
         <div class="col">
-            Reviews from {{username}}
+            {{ review.content }}
+        </div>
+        <div class="col">
+            {{ review.date }}
         </div>
     </div>
-    {% for review in reviews %}
-        <li class="media review-item">
-            <div class="media-body">
-                <span class="float-right">
-                    <small>{{ review.date }}</small>
-                </span>
-                <strong><a href="{{url_for('movie_detail', movie_id = review.imdb_id)}}">{{ review.movie_title }}</a></strong>
-                <p>
-                    {{ review.content }}
-                </p>
-            </div>
-        </li>
-        {% endfor %}
-{%endif%}
+{% endfor %}
+{% endif %}
 {% endblock %}

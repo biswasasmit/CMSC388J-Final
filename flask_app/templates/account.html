@@ -1,38 +1,68 @@
 {% extends "header.html" %}
 {% block content %}
-<div class="row">
-    <div class="col">
-        Welcome {{username}}
-    </div>
-</div>
-<div class="container">
-    <form method="POST" action="">
-        {{ form.csrf_token }}
 
-        <div class="form-group">
-            {{form.new_username.label}}
-            {{form.new_username(class="form-control", placeholder="Please enter your new username")}}
-    
-            {% if form.new_username.errors %}
-            <div class="alert alert-warning" role="alert">
-                {% for error in form.new_username.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
+<div class="container">
+    <div class="card text-center">
+        <div class="card-header">
+            {# Greeting #}
+            <h3>Hello, {{ current_user.username }}!</h3>
         </div>
-        {{form.submit()}}
-    </form>
-</div>
-<div class="row">
-    <div class="col">
-        {# EXTRA CREDIT #}
-        {# Profile Picture Update Form #}
-    </div>
-</div>
-<div class="row">
-    <div class="col"> 
-        <a href="{{url_for('user_detail', username = username)}}">Cick here to see all user review</a>
+        <div class="card-body">
+            {% if current_user.profile_pic %}
+                <img class="mr-3 propic" src="{{ url_for('images', username=current_user.username) }}" />
+            {% endif %}
+            <div class="text-left">
+                {# Username Update Form #}
+                <form method="POST" action="?name">
+                    {{ user_form.csrf_token }}
+                    <div class="row">
+                        <div class="col-6 form-group">
+                            {{ user_form.new_username.label }}
+                            {{ user_form.new_username(class="form-control") }}
+                        </div>
+                        {% if user_form.new_username.errors %}
+                        <div class="col-6 alert alert-warning" role="alert">
+                            {% for error in user_form.new_username.errors %}
+                            <strong>Error!</strong><br />
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ user_form.submit() }} </div>
+                    </div>
+                </form>
+                {# EXTRA CREDIT #}
+                {# Profile Picture Update Form #}
+                <form method="POST" enctype="multipart/form-data" action="?photo">
+                    {{ photo_form.csrf_token }}
+                    <div class="row">
+                        <div class="col-6 form-group">
+                            {{ photo_form.pic.label }}
+                            {{ photo_form.pic(class="form-control") }}
+                        </div>
+                        {% if photo_form.pic.errors %}
+                        <div class="col-6 alert alert-warning" role="alert">
+                            {% for error in photo_form.pic.errors %}
+                            <strong>Error!</strong><br />
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col">{{ photo_form.submit() }} </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-mid">
+                    {# Link to see all of the current user's reviews. #}
+                    <a href={{ url_for('user_detail', username=current_user.username) }}>See your reviews here!</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

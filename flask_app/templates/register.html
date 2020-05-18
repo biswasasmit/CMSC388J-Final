@@ -7,65 +7,73 @@
 </div>
 <div class="row">
     <div class="col">
-        <h5><a href = "{{url_for('login')}}">Click here to login if you already have an account</a></h5>
+        {# Ask the user to login if they already have an account #}
+        <p>If you already have an account, you can log in <a href={{ url_for('login') }}>here</a>.</p>
     </div>
 </div>
 <!-- Registration Form: -->
-<div class="container">
-    <form method="POST" action="">
+{# Optionally show flashed messages if/when you need them,
+    if an authentication or other similar error occurs #}
+{# Registration form rendered with Bootstrap #}
+<form method="POST" action="">
     {{ form.csrf_token }}
-
-    <div class="form-group">
-        {{form.username.label}}
-        {{form.username(class="form-control", placeholder="Please enter your username")}}
-
+    <div class="row">
+        <div class="col-6 form-group">
+            {{ form.username.label }}
+            {{ form.username(class="form-control") }}
+        </div>
         {% if form.username.errors %}
-        <div class="alert alert-warning" role="alert">
+        <div class="col-6 alert alert-warning" role="alert">
             {% for error in form.username.errors %}
-            <span>{{ error }}</span>
+                <strong>Error!</strong><br/>
+                <span>{{ error }}</span>
             {% endfor %}
         </div>
         {% endif %}
     </div>
-
-    <div class="form-group">
-        {{form.email.label}}
-        {{form.email(class="form-control", placeholder = "Please enter your email")}}
-
+    <div class="row">
+        <div class="col-6 form-group">
+            {{ form.email.label }}
+            {{ form.email(class="form-control") }}
+        </div>
         {% if form.email.errors %}
-        <div class="alert alert-warning" role="alert">
+        <div class="col-6 alert alert-warning" role="alert">
             {% for error in form.email.errors %}
+                <strong>Error!</strong><br/>
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
         {% endif %}
     </div>
-    <div class="form-group">
-        {{form.password.label}}
-        {{form.password(class="form-control", placeholder = "Please enter your password")}}
-
+    <div class="row">
+        <div class="col-6 form-group">
+            {{ form.password.label }}
+            {{ form.password(class="form-control") }}
+        </div>
         {% if form.password.errors %}
-        <div class="alert alert-warning" role="alert">
+        <div class="col-6 alert alert-warning" role="alert">
             {% for error in form.password.errors %}
+                <strong>Error!</strong><br/>
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
         {% endif %}
     </div>
-    <div class="form-group">
-        {{form.confirm_password.label}}
-        {{form.confirm_password(class="form-control", placeholder = "Please re-enter your password")}}
-
+    <div class="row">
+        <div class="col-6 form-group">
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password(class="form-control") }}
+        </div>
         {% if form.confirm_password.errors %}
-        <div class="alert alert-warning" role="alert">
+        <div class="col-6 alert alert-warning" role="alert">
             {% for error in form.confirm_password.errors %}
+                <strong>Error!</strong><br/>
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
         {% endif %}
     </div>
-    {{form.submit()}}
-    </form>
-</div>
+    <div class="row"><div class="col">{{ form.submit() }}</div></div>
+</form>
 
 {% endblock %}
