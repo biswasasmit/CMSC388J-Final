@@ -14,7 +14,7 @@
         {# Indicate which user's reviews we're looking at #}
         <h1>{{ user.username }}'s reviews</h1>
         {% if user.profile_pic %}
-            <img class="mr-3 propic user-detail" src="{{ url_for(users.images', username=user.username) }}" />
+            <img class="mr-3 propic user-detail" src="{{ url_for('users.images', username=user.username) }}" />
         {% endif %}
     </div>
 </div>

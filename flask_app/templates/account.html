@@ -9,7 +9,7 @@
         </div>
         <div class="card-body">
             {% if current_user.profile_pic %}
-                <img class="mr-3 propic" src="{{ url_for(users.images', username=current_user.username) }}" />
+                <img class="mr-3 propic" src="{{ url_for('users.images', username=current_user.username) }}" />
             {% endif %}
             <div class="text-left">
                 {# Username Update Form #}
@@ -59,7 +59,7 @@
             <div class="row justify-content-center">
                 <div class="col-mid">
                     {# Link to see all of the current user's reviews. #}
-                    <a href={{ url_for(users.user_detail', username=current_user.username) }}>See your reviews here!</a>
+                    <a href={{ url_for('users.user_detail', username=current_user.username) }}>See your reviews here!</a>
                 </div>
             </div>
         </div>

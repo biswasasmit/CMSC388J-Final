@@ -39,9 +39,9 @@
             <small>{{ review.date }}</small>
           </span>
           {% if review.commenter.profile_pic %}
-              <img class="propic" src="{{ url_for(users.images', username=review.commenter.username) }}"/>
+              <img class="propic" src="{{ url_for('users.images', username=review.commenter.username) }}"/>
           {% endif %}
-          <a href="{{ url_for(users.user_detail', username=review.commenter.username) }}">
+          <a href="{{ url_for('users.user_detail', username=review.commenter.username) }}">
             <strong>@{{ review.commenter.username }}</strong>
           </a>
           <p>
