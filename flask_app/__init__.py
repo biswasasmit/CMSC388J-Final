@@ -23,7 +23,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'users.login'
 bcrypt = Bcrypt(app)
 
-client = GameClient(os.environ.get('OGDB_API_KEY'))
+client = GameClient(os.environ.get('IGDB_API_KEY'))
 
 from flask_app.main.routes import main
 from flask_app.users.routes import users
