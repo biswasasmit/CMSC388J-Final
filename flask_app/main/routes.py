@@ -18,7 +18,6 @@ def index():
 @main.route('/search-results/<query>', methods=['GET'])
 def query_results(query):
     results = client.search(query)
-    print(results)
 
     if type(results) == dict:
         return render_template('query.html', error_msg=results['Error'])
