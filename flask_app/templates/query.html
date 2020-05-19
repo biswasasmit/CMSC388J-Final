@@ -4,23 +4,26 @@
     <p>{{ error_msg }}</p>
 {% endif %}
 
-<div class="container-fluid">
+<div class="container-fluid" align="center">
     {% for result in results %}
-    <div class="media">
-        {% if result.cover %}
-        <img src="{{ result.cover }}" class="mr-3" alt="missing"/>
-        {% else %}
-        <img style="width: 80px; height: 80px" class="mr-3" alt="No cover"/>
-        {% endif %}
-        <div class="media-body">
-        <h5 class="mt-0">
-            <a href="{{ url_for('games.game_detail', game_id=result.id) }}">
-                {{ result.name }}
-            </a> 
-            ({{ result.release_date }})
-        </h5>
+    <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+        <div class="media">
+            {% if result.cover %}
+            <img src="{{ result.cover }}" class="rounded" alt="missing"/>
+            {% else %}
+            <img style="width: 80px; height: 80px" class="rounded" alt="No cover"/>
+            {% endif %}
+            <div class="media-body">
+            <h5 class="mt-0">
+                <a href="{{ url_for('games.game_detail', game_id=result.id) }}">
+                    {{ result.name }}
+                </a> 
+                ({{ result.release_date }})
+            </h5>
+            </div>
         </div>
     </div>
+    
     {% endfor %}
 </div>
 

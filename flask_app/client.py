@@ -1,13 +1,13 @@
 import requests
 from urllib.parse import urlencode
 
-from .utils import unix_to_date
+from .utils import unix_to_date, divide_chunks
 
 class Game:
     def __init__(self, igdb_json, detailed = False):
         if detailed:
             self.age_ratings = igdb_json.get('age_rating', None)
-            self.critic_rating = igdb_json.get('aggregated_rating', None)
+            self.critic_rating= igdb_json.get('aggregated_rating', None)
             self.genres = igdb_json.get('genres', None)
             self.platforms = igdb_json.get('platforms', None)
             self.videos = igdb_json.get('videos', None)
@@ -55,8 +55,9 @@ class GameClient:
             if game.release_date:
                 game.release_date = unix_to_date(game.release_date)
             result.append(game) 
-
+        
         return result
+
 
 
 
@@ -118,13 +119,9 @@ class GameClient:
             if r:
                 r = r[0]
                 game.time_to_beat = str(r['normally']/60) + " Hours"
-            else: game.time_to_beat =  "Unknown"
-        else: game.time_to_beat = "Unknown"
+            else : game.time_to_beat =  "Unknown"
+        else : game.time_to_beat = "Unknown"
 
-        if game.critic_rating:
-            game.critic_rating = f"{int(game.critic_rating)}%"
-        else: game.critic_rating = "Unknown"
-        
         return game
 
 
