@@ -1,8 +1,10 @@
 ## Main routes
 
 from flask import render_template, redirect, url_for, Response, Blueprint, flash
+from flask_mail import Message
+from flask_login import current_user
 from ..forms import SearchForm, InviteFriendForm
-from .. import client
+from .. import client, mail
 
 main = Blueprint("main", __name__)
 
@@ -32,7 +34,11 @@ def about():
 @main.route('/invite', methods=['POST', 'GET'])
 def invite():
     invite_form = InviteFriendForm()
+    invite_form.subject.data = f'Hello from {current_user.username}!'
     if invite_form.validate_on_submit():
+        msg = Message(f'Hello from {current_user.username}!', sender = ('GoodPlays', 'goodplays2020@gmail.com'), recipients = [invite_form.email.data])
+        msg.body = invite_form.body.data
+        mail.send(msg)
         flash("Sent email!")
         return redirect(url_for('main.invite'))
     
