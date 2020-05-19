@@ -1,0 +1,51 @@
+{% extends "header.html" %}
+{% block content %}
+
+<div class="card-header">
+    {# Greeting #}
+    <h3>Invite a Friend!</h3>
+</div>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <p class="alert alert-warning"><strong>{{message}}</strong></p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<form method="POST" action="">
+    {{ invite_form.csrf_token }}
+    <div class="row">
+        <div class="col-6 form-group">
+            {{ invite_form.email.label }}
+            {{ invite_form.email(class="form-control") }}
+        </div>
+        {% if invite_form.email.errors %}
+        <div class="col-6 alert alert-warning" role="alert">
+            {% for error in invite_form.email.errors %}
+            <strong>Error!</strong><br />
+            <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-6 form-group">
+            {{ invite_form.optional_text.label }}
+            {{ invite_form.optional_text(class="form-control") }}
+        </div>
+        {% if invite_form.optional_text.errors %}
+        <div class="col-6 alert alert-warning" role="alert">
+            {% for error in invite_form.optional_text.errors %}
+            <strong>Error!</strong><br />
+            <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col">{{ invite_form.send() }} </div>
+    </div>
+</form>
+{% endblock %}

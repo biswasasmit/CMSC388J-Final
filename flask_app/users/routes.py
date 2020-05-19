@@ -13,7 +13,7 @@ from datetime import datetime
 # local
 from .. import app, bcrypt, client
 from ..forms import (SearchForm, GameReviewForm, RegistrationForm, LoginForm,
-                             UpdateUsernameForm, UpdateProfilePicForm)
+                             UpdateUsernameForm, UpdateProfilePicForm, InviteFriendForm)
 from ..models import User, Review, load_user
 from ..utils import current_time
 
@@ -84,7 +84,7 @@ def account():
         user.profile_pic.replace(photo.read(), content_type=photo.content_type)
         user.save()
         return redirect(url_for('users.account'))
-    
+
     return render_template('account.html', user_form=user_form, photo_form=photo_form)
 
 @users.route('/user/<username>')
