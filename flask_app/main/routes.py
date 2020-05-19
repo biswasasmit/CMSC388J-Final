@@ -3,10 +3,12 @@ from bs4 import BeautifulSoup
 from flask import render_template, redirect, url_for, Response, Blueprint, flash
 from flask_mail import Message
 from flask_login import current_user
-from ..forms import SearchForm, InviteFriendForm
-from .. import client, mail
-from ..utils import current_time
 import requests
+
+from .. import client, mail
+from ..forms import SearchForm, InviteFriendForm
+from ..utils import current_time
+from ..models import Review
 
 main = Blueprint("main", __name__)
 
@@ -26,10 +28,11 @@ def find_top_ten():
 def index():
     form = SearchForm()
     top_ten = find_top_ten()
+    reviews = Review.objects.order_by('-date').limit(10)
     if form.validate_on_submit():
         return redirect(url_for('main.query_results', query=form.search_query.data))
 
-    return render_template('index.html', form=form,top_ten = top_ten, date = current_time())
+    return render_template('index.html', form=form, top_ten=top_ten, date=current_time(), reviews=reviews)
 
 @main.route('/search-results/<query>', methods=['GET'])
 def query_results(query):

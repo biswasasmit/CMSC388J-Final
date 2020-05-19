@@ -21,7 +21,7 @@
 </div>
 <br>
 <br>
-<h1> TOP 10 Games on Steam Currently</h1>
+<h1>Current Top 10 Games on Steam</h1>
 <div class="table-responsive">
     <table class="table table-striped table-dark">
         <thead>
@@ -47,4 +47,30 @@
     </table>
 </div>
 <p><i>{{date}}</i></p>
+<br>
+<h1>Most Recent Reviews</h1>
+<div class="row">
+    <div class="col-md-12">
+      <ul class="media-list">
+        {% for review in reviews %}
+        <li class="media review-item">
+          <div class="media-body">
+            <span class="float-right">
+              <small>{{ review.date }}</small>
+            </span>
+            {% if review.commenter.profile_pic %}
+                <img class="propic" src="{{ url_for('users.images', username=review.commenter.username) }}"/>
+            {% endif %}
+            <a href="{{ url_for('users.user_detail', username=review.commenter.username) }}">
+              <strong>@{{ review.commenter.username }}</strong>
+            </a> in <a href={{ url_for('games.game_detail', game_id=review.game_id) }}>{{ review.game_title }}</a>
+            <p>
+              {{ review.content }}
+            </p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 {% endblock %}
