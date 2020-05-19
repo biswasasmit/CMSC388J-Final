@@ -37,12 +37,9 @@ def game_detail(game_id):
     if 'added' in request.args and add_button.validate_on_submit():
         if GameList.objects(user=load_user(current_user.username)):
             
-            stuff = GameList.objects(user=load_user(current_user.username))
-            games = []
-            for d in stuff:
-                games = d.games
+            user = GameList.objects(user=load_user(current_user.username)).first()
 
-            if game_id in games:
+            if game_id in user.games:
                 flash("This game is already in your list.")
             else:
                 GameList.objects(user=load_user(current_user.username)).update(add_to_set__games=[game_id])
