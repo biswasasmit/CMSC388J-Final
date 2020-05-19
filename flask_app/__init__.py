@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_mongoengine import MongoEngine
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from flask_bcrypt import Bcrypt
+from flask_talisman import Talisman
 from werkzeug.utils import secure_filename
 
 # stdlib
@@ -20,7 +21,20 @@ db = MongoEngine(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'users.login'
 bcrypt = Bcrypt(app)
+csp = {
+    'default-src': [
+        '\'self\'', 
+        'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'
+        ],
+    'img-src': '*',
+    'script-src' : [
+        'https://code.jquery.com/jquery-3.4.1.slim.min.js', 
+        'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js',
+        'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'
+        ]
+}
 
+talisman = Talisman(app, content_security_policy=csp)
 client = GameClient(os.environ.get('IGDB_API_KEY'))
 
 from flask_app.main.routes import main

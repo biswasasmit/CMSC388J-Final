@@ -115,7 +115,7 @@ class GameClient:
             r = r.json()
             if r:
                 r = r[0]
-                game.time_to_beat = r['normally']
+                game.time_to_beat = str(r['normally']/60) + " Hours"
             else : game.time_to_beat =  "Unknown"
         else : game.time_to_beat = "Unknown"
 
