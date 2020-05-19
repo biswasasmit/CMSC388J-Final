@@ -15,11 +15,15 @@
         {{ game.name }} ({{ game.release_date }})
       </div>
       <div class="card-body">
-        <img src="{{ game.cover }}" class="mr-3" alt="alt text">
+        {% if game.cover %}
+        <img src="{{ game.cover }}" class="mr-3" alt="{{ game.name }}">
+        {% else %}
+        <img style="width: 80px; height: 80px;" alt="No cover"/>
+        {% endif %}
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><b>Rating:</b> {{ game.critic_rating }}</li>
-          <li class="list-group-item"><b>Genres:</b> {{ ", ".join(game.genres) }} </li>
-          <li class="list-group-item"><b>Platforms:</b> {{ ", ".join(game.platforms) }} </li>
+          <li class="list-group-item"><b>Genres:</b> {{ ", ".join(game.genres) if game.genres is not string else game.genres }} </li>
+          <li class="list-group-item"><b>Platforms:</b> {{ ", ".join(game.platforms) if game.platforms is not string else game.platforms }} </li>
           <li class="list-group-item"><b>Time to beat:</b> {{ game.time_to_beat }} </li>
         </ul>
       </div>

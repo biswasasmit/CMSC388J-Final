@@ -13,7 +13,10 @@ def find_top_ten():
     steampage = BeautifulSoup(requests.get('https://store.steampowered.com/stats/').text, "html.parser")
     for row in steampage('tr', {'class' :'player_count_row', 'style' :''}):
         x = row.text.split('\n')
-        top_ten.append((x[2],x[5],x[9]))
+        (cur, peak, name) = (x[2], x[5], x[9])
+        results = client.search(name)
+        guess = results[0] if len(results) > 0 else None
+        top_ten.append((cur, peak, name, guess))
     return top_ten
 
 

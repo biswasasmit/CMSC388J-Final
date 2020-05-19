@@ -31,12 +31,16 @@
               <th scope="col">Name</th>
             </tr>
           </thead>
-          {% for game in top_ten %}
+          {% for players, peak, name, game in top_ten %}
           <tbody>
               <tr>
-                <th scope="row">{{game[0]}}</th>
-                <th>{{game[1]}}</th>
-                <th>{{game[2]}}</th>
+                <th scope="row">{{ players }}</th>
+                <th>{{ peak }}</th>
+                {% if game %}
+                <th><a href={{ url_for('games.game_detail', game_id=game.id) }}>{{ name }}</a></th>
+                {% else %}
+                <th>{{ name }}</th>
+                {% endif %}
               </tr>
           </tbody>
           {% endfor %}
