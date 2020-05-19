@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+import pyotp
 from datetime import datetime
 from . import db, login_manager
 
@@ -12,6 +13,7 @@ class User(db.Document, UserMixin):
     username = db.StringField(unique=True, required=True, min_length=1, max_length=40)
     password = db.StringField(required=True)
     profile_pic = db.FileField()
+    otp_secret = db.StringField(required=True, min_length=16, max_length=16, default=pyotp.random_base32())
 
     # Returns unique string identifying our object
     def get_id(self):

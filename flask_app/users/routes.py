@@ -1,14 +1,17 @@
 ## User management routes
 
 # 3rd-party packages
-from flask import render_template, request, redirect, url_for, flash, Response, send_file, Blueprint
+from flask import render_template, request, redirect, url_for, flash, Response, send_file, Blueprint, session
 from flask_mongoengine import MongoEngine
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
+import pyotp, qrcode
+from qrcode.image import svg
 
 # stdlib
 from datetime import datetime
+from io import BytesIO
 
 # local
 from .. import app, bcrypt, client
@@ -35,8 +38,9 @@ def register():
             password=hashed
         )
         user.save()
+        session['new_username'] = user.username
         flash("Thanks for registering! You can now log in below.")
-        return redirect(url_for('users.login'))
+        return redirect(url_for('users.tfa'))
 
     return render_template('register.html', form=form, user_exists=False)
 
@@ -102,3 +106,38 @@ def images(username):
     user = load_user(username)
     photo = user.profile_pic
     return send_file(photo, mimetype=photo.content_type)
+
+@users.route("/qr_code")
+def qr_code():
+    if 'new_username' not in session:
+        return redirect(url_for('main.index'))
+    
+    user = User.objects(username=session['new_username']).first()
+    session.pop('new_username')
+
+    uri = pyotp.totp.TOTP(user.otp_secret).provisioning_uri(name="GoodPlays", issuer_name='GOODPLAYS-2FA')
+    img = qrcode.make(uri, image_factory=svg.SvgPathImage)
+    stream = BytesIO()
+    img.save(stream)
+
+    headers = {
+        'Content-Type': 'image/svg+xml',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0' # Expire immediately, so browser has to reverify everytime
+    }
+
+    return stream.getvalue(), headers
+
+@users.route("/tfa")
+def tfa():
+    if 'new_username' not in session:
+        return redirect(url_for('main.index'))
+
+    headers = {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0' # Expire immediately, so browser has to reverify everytime
+    }
+
+    return render_template('tfa.html'), headers
