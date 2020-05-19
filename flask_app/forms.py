@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 from wtforms import StringField, IntegerField, SubmitField, TextAreaField, PasswordField
 from wtforms.validators import (InputRequired, DataRequired, NumberRange, Length, Email, 
                                 EqualTo, ValidationError)
-
+import re
 
 from .models import User
 
@@ -20,7 +20,7 @@ class GameReviewForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=1, max=40)])
     email = StringField('Email', validators=[InputRequired(), Email()])
-    password = PasswordField('Password', validators=[InputRequired(), Length(min=1)])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=8)])
     confirm_password = PasswordField('Confirm Password', 
                                     validators=[InputRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up')
@@ -28,12 +28,25 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, username):
         user = User.objects(username=username.data).first()
         if user is not None:
-            raise ValidationError('Username is taken')
+            raise ValidationError('Username is taken.')
 
     def validate_email(self, email):        
         user = User.objects(email=email.data).first()
         if user is not None:
-            raise ValidationError('Email is taken')
+            raise ValidationError('Email is taken.')
+
+    def validate_password(self, password):
+        password = str(password.data)
+
+        regexes = [
+            (re.compile(r"[A-Z]"), 'Password must have at least one uppercase letter.'),
+            (re.compile(r"\d"), 'Password must have at least one number.'),
+            (re.compile(r"[^A-Za-z0-9]"), 'Password must have at least one special character.')
+        ]
+        
+        errors = [e for (r, e) in regexes if not r.search(password)]
+        if len(errors) > 0:
+            raise ValidationError(' '.join(errors))
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=1, max=40)])
