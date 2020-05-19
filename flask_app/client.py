@@ -1,4 +1,5 @@
 import requests
+from urllib.parse import urlencode
 
 from .utils import unix_to_date
 
@@ -35,13 +36,14 @@ class GameClient:
 
         Only use this method if the user is using the search bar on the website.
         """
-        payload = {'search': f"{search_string};" , 'limit': "50;", 'fields': "name,cover,first_release_date,id;"}
-        url = f"{self.base_url}games/"
-        response = requests.get(url, headers = self.header, params=payload)
+        payload = {'search': search_string, 'limit': 30, 'fields': "name,cover,first_release_date,id,popularity"}
+        url = f"{self.base_url}games/?{urlencode(payload)}"
+        response = requests.get(url, headers=self.header)
         if response.status_code != 200:
-            raise ValueError('Error searching the API')
+            raise ValueError(f'Error searching the API\n{response.text}')
         result = []
         response = response.json()
+
         for x in response:
             game = Game(x)
             if game.cover:
@@ -115,7 +117,7 @@ class GameClient:
             r = r.json()
             if r:
                 r = r[0]
-                game.time_to_beat = r['normally']
+                game.time_to_beat = str(r['normally']/60) + " Hours"
             else : game.time_to_beat =  "Unknown"
         else : game.time_to_beat = "Unknown"
 
