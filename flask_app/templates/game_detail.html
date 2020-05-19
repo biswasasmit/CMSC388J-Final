@@ -31,6 +31,25 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col">
+    <form method="POST" action="?added">
+      {{ add_button.csrf_token }}
+      <div class="form-group">
+        {{ add_button.submit() }}
+      </div>
+    </form>
+  </div>
+</div>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <p class="alert alert-warning"><strong>{{message}}</strong></p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
 {# Reviews #}
 <div class="row">
   <div class="col-md-12">
@@ -62,7 +81,7 @@
 {# Game review submission form #}
 <div class="row">
   <div class="col">
-    <form method="POST" action="">
+    <form method="POST" action="?reviews">
       {{ form.csrf_token }}
       <div class="form-group">
         {{ form.text.label }}

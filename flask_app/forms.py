@@ -73,3 +73,6 @@ class UpdateProfilePicForm(FlaskForm):
     pic = FileField('Update profile picture:', \
         validators=[FileRequired(), FileAllowed(allowed_exts, 'Images only')])
     submit = SubmitField('Update')
+
+class AddToListButton(FlaskForm):
+    submit = SubmitField("Add To My List!")
