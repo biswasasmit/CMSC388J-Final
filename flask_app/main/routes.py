@@ -22,6 +22,9 @@ def query_results(query):
 
     if type(results) == dict:
         return render_template('query.html', error_msg=results['Error'])
+
+    if len(results) == 0:
+        return render_template('query.html', error_msg="No results found.")
     
     return render_template('query.html', results=results)
 
