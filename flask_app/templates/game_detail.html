@@ -18,8 +18,8 @@
         <img src="{{ game.cover }}" class="mr-3" alt="alt text">
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><b>Rating:</b> {{ game.critic_rating }}</li>
-          <li class="list-group-item"><b>Genres:</b> {{ game.genres }} </li>
-          <li class="list-group-item"><b>Platforms:</b> {{ game.platforms }} </li>
+          <li class="list-group-item"><b>Genres:</b> {{ ", ".join(game.genres) }} </li>
+          <li class="list-group-item"><b>Platforms:</b> {{ ", ".join(game.platforms) }} </li>
           <li class="list-group-item"><b>Time to beat:</b> {{ game.time_to_beat }} </li>
         </ul>
       </div>

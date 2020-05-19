@@ -35,8 +35,8 @@ class GameClient:
 
         Only use this method if the user is using the search bar on the website.
         """
-        payload = {'search':search_string+";" , 'limit': "50;", 'fields': "name,cover,first_release_date,id;"}
-        url = self.base_url+"games/"
+        payload = {'search': f"{search_string};" , 'limit': "50;", 'fields': "name,cover,first_release_date,id;"}
+        url = f"{self.base_url}games/"
         response = requests.get(url, headers = self.header, params=payload)
         if response.status_code != 200:
             raise ValueError('Error searching the API')
@@ -45,7 +45,7 @@ class GameClient:
         for x in response:
             game = Game(x)
             if game.cover:
-                url = self.base_url +"covers/"
+                url = f"{self.base_url}covers/"
                 r = requests.get(url, headers = self.header, params = {'fields': f'*; where id = {game.cover}'})
                 r = r.json()
                 r = r[0]
@@ -64,12 +64,12 @@ class GameClient:
         the supplied igdb_id
         """
         payload = {'fields' : f"*; where id = {imdb_id}" }
-        url = self.base_url+"games/"
+        url = f"{self.base_url}games/"
         response = requests.get(url,headers = self.header, params = payload)
         data = response.json()
         game = Game(data[0], detailed=True)
         if game.cover:
-            url = self.base_url +"covers/"
+            url = f"{self.base_url}covers/"
             r = requests.get(url, headers = self.header, params = {'fields': f'*; where id = {game.cover}'})
             r = r.json()
             r = r[0]
@@ -80,29 +80,29 @@ class GameClient:
         if game.genres:
             genre_list = []
             for g in game.genres:
-                url = self.base_url +"genres/"
+                url = f"{self.base_url}genres/"
                 r = requests.get(url, headers = self.header, params = {'fields': f'name; where id = {g}'})
                 r = r.json()
                 r = r[0]
                 genre_list.append(r['name'])
-            game.genres = str(genre_list)
+            game.genres = genre_list
         else: game.genres = "Unknown"
 
         if game.platforms:
             platform_list = []
             for p in game.platforms:
-                url = self.base_url +"platforms/"
+                url = f"{self.base_url}platforms/"
                 r = requests.get(url, headers = self.header, params = {'fields': f'*; where id = {p}'})
                 r = r.json()
                 r = r[0]
                 platform_list.append(r['name'])
-            game.platforms = str(platform_list)
+            game.platforms = platform_list
         else: game.platforms = "Unknown"
 
         if game.websites:
             website_list = []
             for w in game.websites:
-                url = self.base_url +"websites/"
+                url = f"{self.base_url}websites/"
                 r = requests.get(url, headers = self.header, params = {'fields': f'*; where id = {w}'})
                 r = r.json()
                 r = r[0]
@@ -110,7 +110,7 @@ class GameClient:
             game.websites = website_list
 
         if game.time_to_beat:
-            url = self.base_url + "time_to_beats/"
+            url = f"{self.base_url}time_to_beats/"
             r = requests.get(url, headers = self.header, params = {'fields' : f' *; where id = {game.time_to_beat}'})
             r = r.json()
             if r:

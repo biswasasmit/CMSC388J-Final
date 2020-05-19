@@ -33,6 +33,5 @@ def game_detail(game_id):
 
     reviews = Review.objects(imdb_id=game_id)
 
-    print(current_user.is_authenticated)
-
+    print(type(result.genres))
     return render_template('game_detail.html', form=form, game=result, reviews=reviews)
