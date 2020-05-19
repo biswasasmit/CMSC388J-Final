@@ -18,8 +18,29 @@
             {{ form.submit(class="btn btn-outline-success") }}
         </form>
     </div>
-    <div class="col">
-        <h2>Please use the search bar to search for games! Then you can review them </h2>
-    </div>
 </div>
+<br>
+<br>
+<h1> TOP 10 Games on Steam Currently</h1>
+<div class="table-responsive">
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+              <th scope="col">Current Players</th>
+              <th scope="col">Peak Players Today</th>
+              <th scope="col">Name</th>
+            </tr>
+          </thead>
+          {% for game in top_ten %}
+          <tbody>
+              <tr>
+                <th scope="row">{{game[0]}}</th>
+                <th>{{game[1]}}</th>
+                <th>{{game[2]}}</th>
+              </tr>
+          </tbody>
+          {% endfor %}
+    </table>
+</div>
+<p><i>{{date}}</i></p>
 {% endblock %}
