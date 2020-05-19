@@ -20,8 +20,8 @@ app.config['SECRET_KEY'] = b'\x020;yr\x91\x11\xbe"\x9d\xc1\x14\x91\xadf\xec'
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'goodplays2020@gmail.com'
-app.config['MAIL_PASSWORD'] = 'asmitcameronshruti'
+app.config['MAIL_USERNAME'] = os.environ.get('GOODPLAYS_MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('GOODPLAYS_MAIL_PASSWORD')
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
