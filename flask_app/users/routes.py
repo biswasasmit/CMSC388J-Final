@@ -17,7 +17,7 @@ from io import BytesIO
 from .. import app, bcrypt, client
 from ..forms import (SearchForm, GameReviewForm, RegistrationForm, LoginForm,
                              UpdateUsernameForm, UpdateProfilePicForm, InviteFriendForm)
-from ..models import User, Review, load_user
+from ..models import User, Review, UserGameList, load_user
 from ..utils import current_time
 
 bcrypt = Bcrypt()
@@ -97,7 +97,12 @@ def user_detail(username):
 
     if user is not None:
         reviews = Review.objects(commenter=user)
-        return render_template('user_detail.html', user=user, reviews=reviews)
+
+        games = []
+        if UserGameList.objects(user=user):
+            games =  UserGameList.objects(user=load_user(current_user.username)).get().games
+
+        return render_template('user_detail.html', user=user, reviews=reviews, games=games)
     else:
         return render_template('user_detail.html', err_msg="That user was not found.")
 

@@ -4,7 +4,7 @@ from flask import render_template, flash, request, redirect, url_for, Response, 
 from flask_login import current_user
 from ..forms import GameReviewForm, AddToListButton
 from ..utils import current_time
-from ..models import User, Review, GameList, load_user
+from ..models import User, Review, UserGameList, Game, load_user
 from .. import client
 
 games = Blueprint("games", __name__)
@@ -35,24 +35,32 @@ def game_detail(game_id):
 
     add_button = AddToListButton()
     if 'added' in request.args and add_button.validate_on_submit():
-        if GameList.objects(user=load_user(current_user.username)):
-            
-            user = GameList.objects(user=load_user(current_user.username)).first()
+        new_game = Game (
+            game_id=game_id,
+            name=result.name
+        )
 
-            if game_id in user.games:
+
+        if UserGameList.objects(user=load_user(current_user.username)):
+            
+            user = UserGameList.objects(user=load_user(current_user.username)).get()
+
+            if new_game in user.games:
                 flash("This game is already in your list.")
             else:
-                GameList.objects(user=load_user(current_user.username)).update(add_to_set__games=[game_id])
+                user.games.append(new_game)
+                user.save()
                 flash("Added to list!")
+            
+            return redirect(request.path)
         else:
-            new_list = GameList(
+            new_list = UserGameList(
                 user=load_user(current_user.username), 
-                games=[game_id]
+                games=[new_game]
             )
             new_list.save()
             flash("Added to list!")
-
-        return redirect(request.path)
-
+        
+            return redirect(request.path)
 
     return render_template('game_detail.html', add_button=add_button, form=form, game=result, reviews=reviews)

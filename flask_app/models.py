@@ -18,9 +18,13 @@ class User(db.Document, UserMixin):
     def get_id(self):
         return self.username
 
-class GameList(db.Document):
+class Game(db.EmbeddedDocument):
+    game_id = db.StringField(required=True, unique=True)
+    name = db.StringField(required=True)
+
+class UserGameList(db.Document):
     user = db.ReferenceField(User, required=True)
-    games = db.ListField(db.StringField(), default = [])
+    games = db.ListField(db.EmbeddedDocumentField(Game), default = [])
 
 class Review(db.Document):
     commenter = db.ReferenceField(User, required=True)

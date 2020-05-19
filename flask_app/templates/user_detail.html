@@ -36,4 +36,25 @@
     </div>
 {% endfor %}
 {% endif %}
+{% if user %}
+<div class="row">
+    <div class="col">
+        {# Indicate which user's reviews we're looking at #}
+        <h1>{{ user.username }}'s games</h1>
+        {% if user.profile_pic %}
+            <img class="mr-3 propic user-detail" src="{{ url_for('users.images', username=user.username) }}" />
+        {% endif %}
+    </div>
+</div>
+{% if not games %}
+    <div class="row"><div class="col">This user has not added any games yet!</div></div>
+{% endif %}
+{% for game in games %}
+    <div class="row">
+        <div class="col">
+            <a href="{{ url_for('games.game_detail', game_id=game.game_id) }}">{{ game.name }}</a>
+        </div>
+    </div>
+{% endfor %}
+{% endif %}
 {% endblock %}
