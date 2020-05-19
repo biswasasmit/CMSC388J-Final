@@ -12,6 +12,14 @@
                 <img class="mr-3 propic" src="{{ url_for('users.images', username=current_user.username) }}" />
             {% endif %}
             <div class="text-left">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="alert alert-warning"><strong>{{message}}</strong></p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <h3>Change your username</h3>
                 {# Username Update Form #}
                 <form method="POST" action="?name">
                     {{ user_form.csrf_token }}
@@ -33,6 +41,7 @@
                         <div class="col">{{ user_form.submit() }} </div>
                     </div>
                 </form>
+                <h3>Update your profile picture</h3>
                 {# EXTRA CREDIT #}
                 {# Profile Picture Update Form #}
                 <form method="POST" enctype="multipart/form-data" action="?photo">
@@ -56,6 +65,11 @@
                     </div>
                 </form>
             </div>
+            <p>
+                <a href="{{ url_for('main.invite') }}">
+                    Invite a friend!
+                </a>
+            </li>
             <div class="row justify-content-center">
                 <div class="col-mid">
                     {# Link to see all of the current user's reviews. #}
