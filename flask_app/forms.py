@@ -51,7 +51,7 @@ class UpdateUsernameForm(FlaskForm):
 
 class InviteFriendForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Email()])
-    optional_text = TextAreaField('Email Body', validators=[InputRequired(), Length(min=5, max=500)], default = "Come join me on this awesome website! Sign up today!")
+    optional_text = TextAreaField('Email Body', validators=[InputRequired(), Length(min=5, max=500)], default = "Come join me on this awesome website! Sign up today!", render_kw={"placeholder": "Come join me on this awesome website! Sign up today!"})
     send = SubmitField('Send')
 
 allowed_exts = ['jpg', 'png', 'jpeg', 'gif']
