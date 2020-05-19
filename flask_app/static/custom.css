@@ -23,6 +23,7 @@ img {
     border-bottom: 1px dashed #a5a5a5;
 }
 
-/* .nav-user {
-    border-right: 1px #1d1d1d;
-} */
+.nav-welcome {
+    color: darkgrey;
+    font-size: 11pt;
+}
