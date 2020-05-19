@@ -23,15 +23,14 @@ def game_detail(game_id):
             commenter=load_user(current_user.username), 
             content=form.text.data, 
             date=current_time(),
-            imdb_id=game_id,
-            game_title=result.title
+            game_id=game_id,
+            game_title=result.name
         )
 
         review.save()
 
         return redirect(request.path)
 
-    reviews = Review.objects(imdb_id=game_id)
+    reviews = Review.objects(game_id=game_id)
 
-    print(type(result.genres))
     return render_template('game_detail.html', form=form, game=result, reviews=reviews)

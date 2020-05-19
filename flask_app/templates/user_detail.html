@@ -25,7 +25,7 @@
 {% for review in reviews %}
     <div class="row">
         <div class="col">
-            <a href="{{ url_for('games.game_detail', game_id=review.imdb_id) }}">{{ review.game_title }}</a>
+            <a href="{{ url_for('games.game_detail', game_id=review.game_id) }}">{{ review.game_title }}</a>
         </div>
         <div class="col">
             {{ review.content }}

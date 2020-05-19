@@ -58,12 +58,12 @@ class GameClient:
 
 
 
-    def retrieve_game_by_id(self, imdb_id):
+    def retrieve_game_by_id(self, game_id):
         """ 
         Use to obtain a Game object representing the game identified by
         the supplied igdb_id
         """
-        payload = {'fields' : f"*; where id = {imdb_id}" }
+        payload = {'fields' : f"*; where id = {game_id}" }
         url = f"{self.base_url}games/"
         response = requests.get(url,headers = self.header, params = payload)
         data = response.json()
