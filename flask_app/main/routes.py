@@ -1,7 +1,7 @@
 ## Main routes
 
-from flask import render_template, redirect, url_for, Response, Blueprint
-from ..forms import SearchForm
+from flask import render_template, redirect, url_for, Response, Blueprint, flash
+from ..forms import SearchForm, InviteFriendForm
 from .. import client
 
 main = Blueprint("main", __name__)
@@ -29,3 +29,11 @@ def query_results(query):
 def about():
     return render_template('about.html')
 
+@main.route('/invite', methods=['POST', 'GET'])
+def invite():
+    invite_form = InviteFriendForm()
+    if invite_form.validate_on_submit():
+        flash("Sent email!")
+        return redirect(url_for('main.invite'))
+    
+    return render_template("invite.html", invite_form=invite_form)
