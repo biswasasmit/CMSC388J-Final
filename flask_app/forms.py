@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 from wtforms import StringField, IntegerField, SubmitField, TextAreaField, PasswordField
 from wtforms.validators import (InputRequired, DataRequired, NumberRange, Length, Email, 
                                 EqualTo, ValidationError)
+import pyotp
 import re
 
 from .models import User
@@ -51,7 +52,16 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=1, max=40)])
     password = PasswordField('Password', validators=[InputRequired(), Length(min=1)])
+    token = StringField('Token', validators=[InputRequired(), Length(min=6, max=6)])
     submit = SubmitField('Login')
+
+    def validate_token(self, token):
+        user = User.objects(username=self.username.data).first()
+        if user is not None:
+            tok_verified = pyotp.TOTP(user.otp_secret).verify(token.data)
+            if not tok_verified:
+                raise ValidationError("Invalid Token")
+
 
 class UpdateUsernameForm(FlaskForm):
     new_username = StringField('Update username:', validators=[InputRequired(), Length(min=1, max=40)])
