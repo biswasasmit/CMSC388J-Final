@@ -32,12 +32,26 @@
     </div>
     <div class="row">
         <div class="col-6 form-group">
-            {{ invite_form.optional_text.label }}
-            {{ invite_form.optional_text(class="form-control") }}
+            {{ invite_form.subject.label }}
+            {{ invite_form.subject(class="form-control") }}
         </div>
-        {% if invite_form.optional_text.errors %}
+        {% if invite_form.subject.errors %}
         <div class="col-6 alert alert-warning" role="alert">
-            {% for error in invite_form.optional_text.errors %}
+            {% for error in invite_form.subject.errors %}
+            <strong>Error!</strong><br />
+            <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-6 form-group">
+            {{ invite_form.body.label }}
+            {{ invite_form.body(class="form-control") }}
+        </div>
+        {% if invite_form.body.errors %}
+        <div class="col-6 alert alert-warning" role="alert">
+            {% for error in invite_form.body.errors %}
             <strong>Error!</strong><br />
             <span>{{ error }}</span>
             {% endfor %}
