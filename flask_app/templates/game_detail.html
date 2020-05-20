@@ -21,7 +21,8 @@
         <img style="width: 80px; height: 80px;" alt="No cover"/>
         {% endif %}
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><b>Rating:</b> {{ game.critic_rating }}</li>
+          <li class="list-group-item"> {{ game.storyline if game.storyline else (game.summary if game.summary else "") }} </li>
+          <li class="list-group-item"><b>Rating:</b> {{ game.critic_rating }} (out of {{ game.rating_count if game.rating_count else 0 }} reviews)</li>
           <li class="list-group-item"><b>Genres:</b> {{ ", ".join(game.genres) if game.genres is not string else game.genres }} </li>
           <li class="list-group-item"><b>Platforms:</b> {{ ", ".join(game.platforms) if game.platforms is not string else game.platforms }} </li>
           <li class="list-group-item"><b>Time to beat:</b> {{ game.time_to_beat }} </li>

@@ -8,11 +8,14 @@ class Game:
         if detailed:
             self.age_ratings = igdb_json.get('age_rating', None)
             self.critic_rating= igdb_json.get('aggregated_rating', None)
+            self.rating_count= igdb_json.get('rating_count', None)
             self.genres = igdb_json.get('genres', None)
             self.platforms = igdb_json.get('platforms', None)
             self.videos = igdb_json.get('videos', None)
             self.websites = igdb_json.get('websites', None)
             self.time_to_beat = igdb_json.get('time_to_beat', None)
+            self.storyline = igdb_json.get('storyline', None)
+            self.summary = igdb_json.get('summary', None)
         
         self.id = igdb_json.get('id', None)
         self.name = igdb_json.get('name', None)
@@ -70,6 +73,7 @@ class GameClient:
         url = f"{self.base_url}games/"
         response = requests.get(url,headers = self.header, params = payload)
         data = response.json()
+        print(data)
         game = Game(data[0], detailed=True)
         if game.cover:
             url = f"{self.base_url}covers/"
