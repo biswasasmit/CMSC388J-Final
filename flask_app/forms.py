@@ -88,9 +88,15 @@ class AddToListButton(FlaskForm):
     submit = SubmitField("Add to 'Play Later'")
 
 class AddToPlayedForm(FlaskForm):
+<<<<<<< HEAD
+    finished_on = DateField('Date', validators =[InputRequired()])
+    review = TextAreaField('Comment', validators=[Length(min=5, max=500)])
+    submit = SubmitField("Add To Played List!")
+=======
     finished_on = DateField('Date', validators=[InputRequired()], render_kw={"placeholder": "2020-05-20"})
     review = TextAreaField('Comment', validators=[InputRequired(), Length(min=5, max=500)], render_kw={"placeholder": "I loved this game!"})
     submit = SubmitField("Add to 'Played'")
+>>>>>>> 437fbcb6ffc1935a6ca77de044f4d4f7e0dcf186
 
 class AddToPlayedButton(FlaskForm):
     submit = SubmitField("Add to 'Played'")
