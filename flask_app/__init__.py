@@ -15,7 +15,7 @@ from datetime import datetime
 from .client import GameClient
 
 app = Flask(__name__)
-app.config['MONGODB_HOST'] = 'mongodb://localhost:27017/goodplays'
+app.config['MONGODB_HOST'] = os.environ.get('MONGODB_URI')
 app.config['SECRET_KEY'] = b'\x020;yr\x91\x11\xbe"\x9d\xc1\x14\x91\xadf\xec'
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
