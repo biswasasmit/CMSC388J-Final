@@ -64,7 +64,7 @@ def game_detail(game_id):
             return redirect(request.path)
 
     add_to_played_button = AddToPlayedButton()
-    if 'played' in request.args and add_button.validate_on_submit():
+    if 'played' in request.args and add_to_played_button.validate_on_submit():
         return redirect( url_for('games.add_played', game_id=result.id))
 
     return render_template('game_detail.html', add_button=add_button, form=form, game=result, reviews=reviews, add_to_played_button = add_to_played_button )
@@ -74,7 +74,7 @@ def game_detail(game_id):
 def add_played(game_id):
     result = client.retrieve_game_by_id(game_id)
     form = AddToPlayedForm()
-    if 'added' in request.args and add_button.validate_on_submit():
+    if form.validate_on_submit():
         return redirect(url_for('main.index'))
 
     return render_template('add_to_played.html', form = form, game = result)
