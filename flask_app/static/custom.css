@@ -1,8 +1,6 @@
-img{
-    max-width: 80;
-}
-.propic {
+.propic > img {
     border-radius: 100%;
+    max-width: 80 !important;
 }
 
 .user-detail {
@@ -25,11 +23,8 @@ img{
     color: darkgrey;
     font-size: 11pt;
 }
-.home-img > img {
-    height: 200;
-    width: 200;
-}
-.carousel-inner > img {
-    max-height: 600;
-    max-width: 800;
+
+.carousel-inner > .carousel-item >img {
+    max-height: 600 !important;
+    max-width: 800 !important;
 }
