@@ -85,12 +85,12 @@ class UpdateProfilePicForm(FlaskForm):
     submit = SubmitField('Update')
 
 class AddToListButton(FlaskForm):
-    submit = SubmitField("Add to 'Play Later'")
+    submit = SubmitField("Add to Play Later")
 
 class AddToPlayedForm(FlaskForm):
     finished_on = DateField('Date', validators=[InputRequired()], render_kw={"placeholder": "2020-05-20"})
     review = TextAreaField('Comment', validators=[InputRequired(), Length(min=5, max=500)], render_kw={"placeholder": "I loved this game!"})
-    submit = SubmitField("Add to 'Played'")
+    submit = SubmitField("Add to Played")
 
 class AddToPlayedButton(FlaskForm):
-    submit = SubmitField("Add to 'Played'")
+    submit = SubmitField("Add to Played")
