@@ -21,20 +21,28 @@
 </div>
 {% if not reviews %}
     <div class="row"><div class="col">This user has not posted any reviews yet!</div></div>
+{% else %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Game</th>
+            <th scope="col">Review</th>
+            <th scope="col">Date</th>
+            </tr>
+        </thead>
+        {% for review in reviews %}
+            <tbody>
+                <tr>
+                    <th scope="row"><a href={{ url_for('games.game_detail', game_id=review.game_id) }}">{{ review.game_title }}</a></th>
+                    <th>{{ review.content }}</th>
+                    <th>{{ review.date }}</th>
+                </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+</div>
 {% endif %}
-{% for review in reviews %}
-    <div class="row">
-        <div class="col">
-            <a href="{{ url_for('games.game_detail', game_id=review.game_id) }}">{{ review.game_title }}</a>
-        </div>
-        <div class="col">
-            {{ review.content }}
-        </div>
-        <div class="col">
-            {{ review.date }}
-        </div>
-    </div>
-{% endfor %}
 {% endif %}
 
 {% if user %}
@@ -45,15 +53,26 @@
 </div>
 {% if not games %}
     <div class="row"><div class="col">This user has not saved any games yet!</div></div>
+{% else %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Game</th>
+            </tr>
+        </thead>
+        {% for game in games %}
+            <tbody>
+                <tr>
+                    <th scope="row"><a href="{{ url_for('games.game_detail', game_id=game.game_id) }}">{{ game.name }}</a></th>
+                </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+</div>
 {% endif %}
-{% for game in games %}
-    <div class="row">
-        <div class="col">
-            <a href="{{ url_for('games.game_detail', game_id=game.game_id) }}">{{ game.name }}</a>
-        </div>
-    </div>
-{% endfor %}
 {% endif %}
+
 
 {% if user %}
 <div class="row">
@@ -63,19 +82,29 @@
 </div>
 {% if not played %}
     <div class="row"><div class="col">This user has not played any games yet!</div></div>
+{% else %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Game</th>
+            <th scope="col">Review</th>
+            <th scope="col">Finished Date</th>
+            </tr>
+        </thead>
+        {% for played in played %}
+            <tbody>
+                <tr>
+                    <th scope="row"><a href="{{ url_for('games.game_detail', game_id=played.game.game_id) }}">{{ played.game.name }}</a></th>
+                    <th>{{ played.review }}</th>
+                    <th>Finished on {{ played.finished_on }}</th>
+                </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+</div>
 {% endif %}
-{% for played in played %}
-    <div class="row">
-        <div class="col">
-            <a href="{{ url_for('games.game_detail', game_id=played.game.game_id) }}">{{ played.game.name }}</a>
-        </div>
-        <div class="col">
-            {{ played.review }}
-        </div>
-        <div class="col">
-            Finished on {{ played.finished_on }}
-        </div>
-    </div>
-{% endfor %}
+
 {% endif %}
 {% endblock %}
+
