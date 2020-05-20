@@ -119,8 +119,12 @@ class GameClient:
             if r:
                 r = r[0]
                 game.time_to_beat = str(r['normally']/60) + " Hours"
-            else : game.time_to_beat =  "Unknown"
-        else : game.time_to_beat = "Unknown"
+            else: game.time_to_beat =  "Unknown"
+        else: game.time_to_beat = "Unknown"
+
+        if game.critic_rating:
+            game.critic_rating = f"{int(game.critic_rating)}%"
+        else: game.critic_rating = "Unknown"
 
         return game
 
