@@ -1,9 +1,10 @@
 .propic {
     border-radius: 100%;
+    max-width: 50px;
 }
 
-.user-detail {
-    max-width: 150;
+.propic-large {
+    max-width: 200px;
 }
 
 .card-body > img {

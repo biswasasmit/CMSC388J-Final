@@ -9,7 +9,7 @@
         </div>
         <div class="card-body">
             {% if current_user.profile_pic %}
-                <img class="mr-3 propic" src="{{ url_for('users.images', username=current_user.username) }}" />
+                <img class="mr-3 propic propic-large" src="{{ url_for('users.images', username=current_user.username) }}" />
             {% endif %}
             <div class="text-left">
                 {% with messages = get_flashed_messages() %}

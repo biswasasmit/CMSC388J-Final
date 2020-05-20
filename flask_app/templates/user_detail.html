@@ -9,13 +9,15 @@
     {% endif %}
 </div>
 {% if user %}
+{% if user.profile_pic %}
+<div class="text-center">
+    <img class="mr-3 propic propic-large user-detail center" src="{{ url_for('users.images', username=user.username) }}" />
+</div>
+{% endif %}
 <div class="row">
     <div class="col">
         {# Indicate which user's reviews we're looking at #}
         <h1>{{ user.username }}'s reviews</h1>
-        {% if user.profile_pic %}
-            <img class="mr-3 propic user-detail" src="{{ url_for('users.images', username=user.username) }}" />
-        {% endif %}
     </div>
 </div>
 {# Show all reviews made by the user #}
@@ -41,9 +43,6 @@
     <div class="col">
         {# Indicate which user's reviews we're looking at #}
         <h1>{{ user.username }}'s games</h1>
-        {% if user.profile_pic %}
-            <img class="mr-3 propic user-detail" src="{{ url_for('users.images', username=user.username) }}" />
-        {% endif %}
     </div>
 </div>
 {% if not games %}
