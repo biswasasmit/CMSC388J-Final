@@ -37,7 +37,7 @@
     <form method="POST" action="?added">
       {{ add_button.csrf_token }}
       <div class="form-group">
-        {{ add_button.submit() }}
+        {{ add_button.submit(class="btn btn-secondary") }}
       </div>
     </form>
   </div>
@@ -45,7 +45,7 @@
     <form method="POST" action="?played">
       {{ add_to_played_button.csrf_token }}
       <div class="form-group">
-        {{ add_to_played_button.submit() }}
+        {{ add_to_played_button.submit(class="btn btn-secondary") }}
       </div>
     </form>
   </div>
@@ -106,7 +106,7 @@
         {% endif %}
 
       </div>
-      {{ form.submit() }}
+      {{ form.submit(class="btn btn-secondary") }}
     </form>
   </div>
 </div>

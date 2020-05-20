@@ -16,11 +16,9 @@
 {% endif %}
 <div class="row">
     <div class="col">
-        {# Indicate which user's reviews we're looking at #}
         <h1>{{ user.username }}'s reviews</h1>
     </div>
 </div>
-{# Show all reviews made by the user #}
 {% if not reviews %}
     <div class="row"><div class="col">This user has not posted any reviews yet!</div></div>
 {% endif %}
@@ -38,20 +36,44 @@
     </div>
 {% endfor %}
 {% endif %}
+
 {% if user %}
 <div class="row">
     <div class="col">
-        {# Indicate which user's reviews we're looking at #}
-        <h1>{{ user.username }}'s games</h1>
+        <h1>{{ user.username }}'s saved games</h1>
     </div>
 </div>
 {% if not games %}
-    <div class="row"><div class="col">This user has not added any games yet!</div></div>
+    <div class="row"><div class="col">This user has not saved any games yet!</div></div>
 {% endif %}
 {% for game in games %}
     <div class="row">
         <div class="col">
             <a href="{{ url_for('games.game_detail', game_id=game.game_id) }}">{{ game.name }}</a>
+        </div>
+    </div>
+{% endfor %}
+{% endif %}
+
+{% if user %}
+<div class="row">
+    <div class="col">
+        <h1>{{ user.username }}'s played games</h1>
+    </div>
+</div>
+{% if not played %}
+    <div class="row"><div class="col">This user has not played any games yet!</div></div>
+{% endif %}
+{% for played in played %}
+    <div class="row">
+        <div class="col">
+            <a href="{{ url_for('games.game_detail', game_id=played.game.game_id) }}">{{ played.game.name }}</a>
+        </div>
+        <div class="col">
+            {{ played.review }}
+        </div>
+        <div class="col">
+            Finished on {{ played.finished_on }}
         </div>
     </div>
 {% endfor %}

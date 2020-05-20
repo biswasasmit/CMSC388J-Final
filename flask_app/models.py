@@ -26,6 +26,16 @@ class UserGameList(db.Document):
     user = db.ReferenceField(User, required=True)
     games = db.ListField(db.EmbeddedDocumentField(Game), default = [])
 
+class DGame(db.Document):
+    game_id = db.StringField(required=True, unique=True)
+    name = db.StringField(required=True)
+
+class PlayedGame(db.Document):
+    user = db.ReferenceField(User, required=True)
+    finished_on = db.DateField(required=True)
+    review = db.StringField(required=True)
+    game = db.ReferenceField(DGame)
+
 class Review(db.Document):
     commenter = db.ReferenceField(User, required=True)
     content = db.StringField(required=True, min_length=5, max_length=500)

@@ -4,7 +4,7 @@ from flask import render_template, flash, request, redirect, url_for, Response, 
 from flask_login import current_user, login_required
 from ..forms import GameReviewForm, AddToListButton, AddToPlayedButton, AddToPlayedForm
 from ..utils import current_time
-from ..models import User, Review, UserGameList, Game, load_user
+from ..models import User, Review, UserGameList, Game, load_user, PlayedGame, DGame
 from .. import client
 
 games = Blueprint("games", __name__)
@@ -40,9 +40,7 @@ def game_detail(game_id):
             name=result.name
         )
 
-
         if UserGameList.objects(user=load_user(current_user.username)):
-            
             user = UserGameList.objects(user=load_user(current_user.username)).get()
 
             if new_game in user.games:
@@ -75,6 +73,20 @@ def add_played(game_id):
     result = client.retrieve_game_by_id(game_id)
     form = AddToPlayedForm()
     if form.validate_on_submit():
-        return redirect(url_for('main.index'))
+        game = DGame(
+            game_id=game_id,
+            name=result.name
+        )
+        game.save()
+        played = PlayedGame(
+            user=load_user(current_user.username),
+            finished_on=form.finished_on.data,
+            review=form.review.data,
+            game=game
+        )
+        played.save()
+        flash("Added played game!")
+
+        return redirect(request.path)
 
     return render_template('add_to_played.html', form = form, game = result)
