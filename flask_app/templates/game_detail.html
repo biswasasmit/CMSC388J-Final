@@ -31,8 +31,9 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col">
+
+<div class="row justify-content-between">
+  <div class="col-4">
     <form method="POST" action="?added">
       {{ add_button.csrf_token }}
       <div class="form-group">
@@ -40,7 +41,16 @@
       </div>
     </form>
   </div>
+  <div class="col-4 text-right">
+    <form method="POST" action="?played">
+      {{ add_to_played_button.csrf_token }}
+      <div class="form-group">
+        {{ add_to_played_button.submit() }}
+      </div>
+    </form>
+  </div>
 </div>
+
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}

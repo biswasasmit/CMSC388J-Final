@@ -2,7 +2,7 @@ from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from werkzeug.utils import secure_filename
-from wtforms import StringField, IntegerField, SubmitField, TextAreaField, PasswordField
+from wtforms import StringField, IntegerField, SubmitField, TextAreaField, PasswordField, DateField
 from wtforms.validators import (InputRequired, DataRequired, NumberRange, Length, Email, 
                                 EqualTo, ValidationError)
 import pyotp
@@ -86,3 +86,11 @@ class UpdateProfilePicForm(FlaskForm):
 
 class AddToListButton(FlaskForm):
     submit = SubmitField("Add To My List!")
+
+class AddToPlayedForm(FlaskForm):
+    finished_on = DateField('Date', validators =[InputRequired()])
+    review = TextAreaField('Comment', validators=[InputRequired(), Length(min=5, max=500)])
+    submit = SubmitField("Add To Played List!")
+
+class AddToPlayedButton(FlaskForm):
+    submit = SubmitField("Add This Game To Played List!")

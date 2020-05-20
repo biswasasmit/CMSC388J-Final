@@ -1,8 +1,8 @@
 ## Game routes
 
 from flask import render_template, flash, request, redirect, url_for, Response, Blueprint
-from flask_login import current_user
-from ..forms import GameReviewForm, AddToListButton
+from flask_login import current_user, login_required
+from ..forms import GameReviewForm, AddToListButton, AddToPlayedButton, AddToPlayedForm
 from ..utils import current_time
 from ..models import User, Review, UserGameList, Game, load_user
 from .. import client
@@ -63,4 +63,18 @@ def game_detail(game_id):
         
             return redirect(request.path)
 
-    return render_template('game_detail.html', add_button=add_button, form=form, game=result, reviews=reviews)
+    add_to_played_button = AddToPlayedButton()
+    if 'played' in request.args and add_button.validate_on_submit():
+        return redirect( url_for('games.add_played', game_id=result.id))
+
+    return render_template('game_detail.html', add_button=add_button, form=form, game=result, reviews=reviews, add_to_played_button = add_to_played_button )
+
+@games.route('/games/add_to_played/<game_id>', methods=['GET', 'POST'])
+@login_required
+def add_played(game_id):
+    result = client.retrieve_game_by_id(game_id)
+    form = AddToPlayedForm()
+    if 'added' in request.args and add_button.validate_on_submit():
+        return redirect(url_for('main.index'))
+
+    return render_template('add_to_played.html', form = form, game = result)

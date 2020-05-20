@@ -1,0 +1,25 @@
+{% extends "header.html" %}
+{% block content %}
+
+<br>
+{% if game.cover %}
+<img src="{{ game.cover }}" alt="{{ game.name }}" width= "100" height="100">
+{% else %}
+<img style="width: 80px; height: 80px;" alt="No cover"/>
+{% endif %}
+<br>
+<br>
+<h6>Add {{ game.name }} to your played list!</h6>
+
+<form method="POST" action="?added">
+  {{ form.csrf_token }}
+  {{form.finished_on.label}}</br>
+  {{form.finished_on(class="form-control")}} </br>
+  {{form.review.label}}</br>
+  {{form.review(class="form-control")}}<br>
+  <div class="form-group">
+    {{ form.submit() }}
+  </div>
+</form>
+
+{% endblock content %}

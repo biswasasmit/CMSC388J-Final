@@ -1,5 +1,5 @@
 img {
-    max-width: 80;
+    max-width: 400;
     padding: 1; 
 }
 
@@ -16,7 +16,7 @@ img {
 }
 
 .media-list {
-    border-top: 1px solid rgb(150, 150, 150);
+    border-top: 1px solid rgb(156, 71, 71);
 }
 
 .review-item {
@@ -26,4 +26,8 @@ img {
 .nav-welcome {
     color: darkgrey;
     font-size: 11pt;
+}
+.home-img > img {
+    height: 200;
+    width: 200;
 }

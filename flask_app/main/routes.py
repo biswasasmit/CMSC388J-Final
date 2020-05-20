@@ -29,10 +29,13 @@ def index():
     form = SearchForm()
     top_ten = find_top_ten()
     reviews = Review.objects.order_by('-date').limit(10)
+    game_s = url_for('static', filename='spiderman.jpg')
+    game_c = url_for('static', filename='starwars.jpg')
+    game_a = url_for('static',filename='witcher.jpg')
     if form.validate_on_submit():
         return redirect(url_for('main.query_results', query=form.search_query.data))
 
-    return render_template('index.html', form=form, top_ten=top_ten, date=current_time(), reviews=reviews)
+    return render_template('index.html', form=form, top_ten=top_ten, date=current_time(), reviews=reviews, game_a = game_a, game_s = game_s, game_c= game_c)
 
 @main.route('/search-results/<query>', methods=['GET'])
 def query_results(query):
