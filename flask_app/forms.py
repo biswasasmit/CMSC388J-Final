@@ -15,7 +15,7 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Search')
 
 class GameReviewForm(FlaskForm):
-    text = TextAreaField('Review', validators=[InputRequired(), Length(min=5, max=500)], render_kw={"placeholder": "Fantastic game!"})
+    text = TextAreaField('Leave a Review', validators=[InputRequired(), Length(min=5, max=500)], render_kw={"placeholder": "Fantastic game!"})
     submit = SubmitField('Enter Review')
 
 class RegistrationForm(FlaskForm):
