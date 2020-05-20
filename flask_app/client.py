@@ -73,7 +73,7 @@ class GameClient:
         url = f"{self.base_url}games/"
         response = requests.get(url,headers = self.header, params = payload)
         data = response.json()
-        print(data)
+
         game = Game(data[0], detailed=True)
         if game.cover:
             url = f"{self.base_url}covers/"

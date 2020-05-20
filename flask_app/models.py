@@ -7,6 +7,9 @@ from . import db, login_manager
 def load_user(user_id):
     return User.objects(username=user_id).first()
 
+def load_game(game_id):
+    return DGame.objects(game_id=game_id).first()
+
 class User(db.Document, UserMixin):
     email = db.EmailField(unique=True, required=True)
     username = db.StringField(unique=True, required=True, min_length=1, max_length=40)

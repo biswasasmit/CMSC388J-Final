@@ -65,7 +65,13 @@ def game_detail(game_id):
     if 'played' in request.args and add_to_played_button.validate_on_submit():
         return redirect( url_for('games.add_played', game_id=result.id))
 
-    return render_template('game_detail.html', add_button=add_button, form=form, game=result, reviews=reviews, add_to_played_button = add_to_played_button )
+    games = DGame.objects(game_id=game_id)
+    played = []
+    
+    if games:
+        played = PlayedGame.objects(game=games.first())
+
+    return render_template('game_detail.html', add_button=add_button, form=form, game=result, reviews=reviews, add_to_played_button=add_to_played_button, played=played)
 
 @games.route('/games/add_to_played/<game_id>', methods=['GET', 'POST'])
 @login_required

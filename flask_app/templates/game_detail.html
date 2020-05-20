@@ -22,7 +22,7 @@
         {% endif %}
         <ul class="list-group list-group-flush">
           <li class="list-group-item"> {{ game.storyline if game.storyline else (game.summary if game.summary else "") }} </li>
-          <li class="list-group-item"><b>Rating:</b> {{ game.critic_rating }} (out of {{ game.rating_count if game.rating_count else 0 }} reviews)</li>
+          <li class="list-group-item"><b>Critic's rating:</b> {{ game.critic_rating }} (out of {{ game.rating_count if game.rating_count else 0 }} reviews)</li>
           <li class="list-group-item"><b>Genres:</b> {{ ", ".join(game.genres) if game.genres is not string else game.genres }} </li>
           <li class="list-group-item"><b>Platforms:</b> {{ ", ".join(game.platforms) if game.platforms is not string else game.platforms }} </li>
           <li class="list-group-item"><b>Time to beat:</b> {{ game.time_to_beat }} </li>
@@ -113,4 +113,33 @@
 </div>
 {% endif %}
 {% endif %}
+
+{% if played|length > 0 %}
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="d-flex justify-content-center"> Hear from people who have played! </h1>
+    <ul class="media-list">
+      {% for game in played %}
+      <li class="media review-item">
+        <div class="media-body">
+          <span class="float-right">
+            <small>Finished on: {{ game.finished_on }}</small>
+          </span>
+          {% if game.user.profile_pic %}
+              <img class="propic" src="{{ url_for('users.images', username=game.user.username) }}"/>
+          {% endif %}
+          <a href="{{ url_for('users.user_detail', username=game.user.username) }}">
+            <strong>@{{ game.user.username }}</strong>
+          </a>
+          <p>
+            {{ game.review }}
+          </p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}
+
 {% endblock content %}
