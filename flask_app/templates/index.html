@@ -2,22 +2,22 @@
 {% block content %}
 
 <div class="row">
-    <div class="col">
-        <form action="/" class="form-inline my-2 my-lg-0" method="POST">
-            {{ form.csrf_token }}
-            {{ form.search_query(class="form-control", placeholder="Search") }}
+  <div class="col">
+    <form action="/" class="form-inline my-2 my-lg-0" method="POST">
+      {{ form.csrf_token }}
+      {{ form.search_query(class="form-control", placeholder="Search") }}
 
-            {% if form.search_query.errors %}
-            <div class="alert alert-warning" role="alert">
-                {% for error in form.search_query.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
+      {% if form.search_query.errors %}
+      <div class="alert alert-warning" role="alert">
+        {% for error in form.search_query.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
 
-            {{ form.submit(class="btn btn-outline-success") }}
-        </form>
-    </div>
+      {{ form.submit(class="btn btn-outline-success") }}
+    </form>
+  </div>
 </div>
 <br>
 <h1>Developer's Picks</h1>
@@ -33,43 +33,39 @@
   <!--Slides-->
   <div class="carousel-inner" role="listbox">
     <div class="carousel-item active">
-      <div class="view">
-        <img class="d-block w-100" src="{{game_a}}"
-          alt="First slide">
-        <div class="mask rgba-black-strong"></div>
-      </div>
-      <div class="carousel-caption">
-        <a href="{{ url_for('games.game_detail', game_id=1942) }}">
+      <a href="{{ url_for('games.game_detail', game_id=1942) }}">
+        <div class="view">
+          <img class="d-block w-100" src="{{game_a}}" alt="First slide">
+          <div class="mask rgba-black-strong"></div>
+        </div>
+        <div class="carousel-caption">
           <h3 class="h3-responsive">Asmit's Pick</h3>
-        </a>
-        
-      </div>
+        </div>
+      </a>
     </div>
     <div class="carousel-item">
-      <!--Mask color-->
-      <div class="view">
-        <img class="d-block w-100" src="{{game_c}}"
-          alt="Second slide">
-        <div class="mask rgba-black-strong"></div>
-      </div>
-      <div class="carousel-caption">
-        <a href="{{ url_for('games.game_detail', game_id=19565) }}">
+      <a href="{{ url_for('games.game_detail', game_id=19565) }}">
+        <!--Mask color-->
+        <div class="view">
+          <img class="d-block w-100" src="{{game_c}}" alt="Second slide">
+          <div class="mask rgba-black-strong"></div>
+        </div>
+        <div class="carousel-caption">
           <h3 class="h3-responsive">Cameron's Pick</h3>
-        </a>
-      </div>
+        </div>
+      </a>
     </div>
     <div class="carousel-item">
-      <!--Mask color-->
-      <div class="view">
-        <img class="d-block w-100" src="{{game_s}}"
-          alt="Third slide">
-        <div class="mask rgba-black-strong"></div>
-      </div>
-      <div class="carousel-caption">
-        <a href="{{ url_for('games.game_detail', game_id=116) }}">
+      <a href="{{ url_for('games.game_detail', game_id=116) }}">
+        <!--Mask color-->
+        <div class="view">
+          <img class="d-block w-100" src="{{game_s}}" alt="Third slide">
+          <div class="mask rgba-black-strong"></div>
+        </div>
+        <div class="carousel-caption">
           <h3 class="h3-responsive">Shruti's Pick</h3>
-        </a>
-      </div>
+        </div>
+      </a>
     </div>
   </div>
   <!--/.Slides-->
@@ -89,54 +85,54 @@
 <br>
 <h1>Current Top 10 Games on Steam</h1>
 <div class="table-responsive">
-    <table class="table table-striped table-dark">
-        <thead>
-            <tr>
-              <th scope="col">Current Players</th>
-              <th scope="col">Peak Players Today</th>
-              <th scope="col">Name</th>
-            </tr>
-          </thead>
-          {% for players, peak, name, game in top_ten %}
-          <tbody>
-              <tr>
-                <th scope="row">{{ players }}</th>
-                <th>{{ peak }}</th>
-                {% if game %}
-                <th><a href={{ url_for('games.game_detail', game_id=game.id) }}>{{ name }}</a></th>
-                {% else %}
-                <th>{{ name }}</th>
-                {% endif %}
-              </tr>
-          </tbody>
-          {% endfor %}
-    </table>
+  <table class="table table-striped table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Current Players</th>
+        <th scope="col">Peak Players Today</th>
+        <th scope="col">Name</th>
+      </tr>
+    </thead>
+    {% for players, peak, name, game in top_ten %}
+    <tbody>
+      <tr>
+        <th scope="row">{{ players }}</th>
+        <th>{{ peak }}</th>
+        {% if game %}
+        <th><a href={{ url_for('games.game_detail', game_id=game.id) }}>{{ name }}</a></th>
+        {% else %}
+        <th>{{ name }}</th>
+        {% endif %}
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
 </div>
 <p><i>{{date}}</i></p>
 <br>
 <h1>Most Recent Reviews</h1>
 <div class="row">
-    <div class="col-md-12">
-      <ul class="media-list">
-        {% for review in reviews %}
-        <li class="media review-item">
-          <div class="media-body">
-            <span class="float-right">
-              <small>{{ review.date }}</small>
-            </span>
-            {% if review.commenter.profile_pic %}
-                <img class="propic" src="{{ url_for('users.images', username=review.commenter.username) }}"/>
-            {% endif %}
-            <a href="{{ url_for('users.user_detail', username=review.commenter.username) }}">
-              <strong>@{{ review.commenter.username }}</strong>
-            </a> in <a href={{ url_for('games.game_detail', game_id=review.game_id) }}>{{ review.game_title }}</a>
-            <p>
-              {{ review.content }}
-            </p>
-          </div>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
+  <div class="col-md-12">
+    <ul class="media-list">
+      {% for review in reviews %}
+      <li class="media review-item">
+        <div class="media-body">
+          <span class="float-right">
+            <small>{{ review.date }}</small>
+          </span>
+          {% if review.commenter.profile_pic %}
+          <img class="propic" src="{{ url_for('users.images', username=review.commenter.username) }}" />
+          {% endif %}
+          <a href="{{ url_for('users.user_detail', username=review.commenter.username) }}">
+            <strong>@{{ review.commenter.username }}</strong>
+          </a> in <a href={{ url_for('games.game_detail', game_id=review.game_id) }}>{{ review.game_title }}</a>
+          <p>
+            {{ review.content }}
+          </p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
+</div>
 {% endblock %}
