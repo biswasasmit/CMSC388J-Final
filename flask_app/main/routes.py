@@ -31,7 +31,7 @@ def index():
     reviews = Review.objects.order_by('-date').limit(10)
     game_s = url_for('static', filename='spiderman.jpg')
     game_c = url_for('static', filename='starwars.jpg')
-    game_a = url_for('static',filename='witcher.jpg')
+    game_a = url_for('static', filename='witcher.jpg')
     if form.validate_on_submit():
         return redirect(url_for('main.query_results', query=form.search_query.data))
 

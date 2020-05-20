@@ -89,7 +89,7 @@ class AddToListButton(FlaskForm):
 
 class AddToPlayedForm(FlaskForm):
     finished_on = DateField('Date', validators =[InputRequired()])
-    review = TextAreaField('Comment', validators=[InputRequired(), Length(min=5, max=500)])
+    review = TextAreaField('Comment', validators=[Length(min=5, max=500)])
     submit = SubmitField("Add To Played List!")
 
 class AddToPlayedButton(FlaskForm):

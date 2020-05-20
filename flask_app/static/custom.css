@@ -1,8 +1,3 @@
-img {
-    max-width: 400;
-    padding: 1; 
-}
-
 .propic {
     border-radius: 100%;
 }
@@ -30,4 +25,8 @@ img {
 .home-img > img {
     height: 200;
     width: 200;
+}
+.carousel-inner > img {
+    max-height: 600;
+    max-width: 800;
 }
